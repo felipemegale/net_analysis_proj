@@ -1,0 +1,7 @@
+https://github.com/KaiDMML/FakeNewsNet
+
+https://github.com/manideep2510/siamese-BERT-fake-news-detection-LIAR
+
+https://github.com/BUPT-GAMMA/CompareNet_FakeNewsDetection
+
+https://github.com/safe-graph/GNN-FakeNews

@@ -7,6 +7,7 @@
 ```
 net_analysis_proj
 |    README.md
+|    datasets.txt
 |____refs
      |____pdf
      |    project_proposal.pdf
