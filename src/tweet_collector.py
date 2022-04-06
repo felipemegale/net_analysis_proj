@@ -70,7 +70,10 @@ for real_news_row in politifact_real[1:]:
                         except:
                             pass
                         else:
-                            REAL_COLLECTED_DATA.append([politifact_id, data['author_id'], data['text'], news_url, REAL_NEWS])
+                            tweet_id = data['id']
+                            tweet_author = data['author_id']
+                            tweet_text = data['text'].replace('\n', ' ')
+                            REAL_COLLECTED_DATA.append([politifact_id, tweet_id, tweet_author, tweet_text, news_url, REAL_NEWS])
                     elif data.status_code == 429:
                         print(data.headers)
                         sleep(10)
@@ -78,6 +81,10 @@ for real_news_row in politifact_real[1:]:
                         pass
                 except Exception as e:
                     print('%r generated an exception %s' % (tweet_data,e))
+
+with open(f'collected_real_news.csv', 'w') as f:
+    writer = csv.writer(f)
+    writer.writerows(REAL_COLLECTED_DATA)
 
 for fake_news_row in politifact_fake[1:]:
     splitted_row = fake_news_row.split(',')
@@ -96,13 +103,15 @@ for fake_news_row in politifact_fake[1:]:
                     data = future.result()
                     if data.status_code == 200:
                         resp = json.loads(data.content)
-
                         try:
                             data = resp['data']
                         except:
                             pass
                         else:
-                            FAKE_COLLECTED_DATA.append([politifact_id, data['author_id'], data['text'], news_url, FAKE_NEWS])
+                            tweet_id = data['id']
+                            tweet_author = data['author_id']
+                            tweet_text = data['text'].replace('\n', ' ')
+                            FAKE_COLLECTED_DATA.append([politifact_id, tweet_id, tweet_author, tweet_text, news_url, FAKE_NEWS])
                     elif data.status_code == 429:
                         print(data.headers)
                         sleep(10)
@@ -110,10 +119,6 @@ for fake_news_row in politifact_fake[1:]:
                         pass
                 except Exception as e:
                     print('%r generated an exception %s' % (tweet_data,e))
-
-with open(f'collected_real_news.csv', 'w') as f:
-    writer = csv.writer(f)
-    writer.writerows(REAL_COLLECTED_DATA)
 
 with open(f'collected_fake_news.csv', 'w') as f:
     writer = csv.writer(f)
